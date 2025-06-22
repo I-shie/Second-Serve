@@ -172,4 +172,4 @@ const foodItemModel = mongoose.model('Restaurant', foodItemSchema);
 //     contact: 7099043794,
 //     email:"ntrust@gmail.com"
 // });
-ngo1.save();
+// ngo1.save();
