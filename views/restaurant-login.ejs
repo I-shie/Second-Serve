@@ -24,23 +24,38 @@
   <label>Email</label><input type="email">
     <label>Password</label><input type="password">
       <input type="submit" value="Login">
-
+</form>
 </div>
 
 <div id="register-page" style="display: none;">
-  <form action="/restaurant-login" method="POST">
-  <h1>Registration</h1>
-  <label>NGO Name</label><input type="text" required name="n-name">
-  <label>NGO Registration No</label><input type="text" name="n-ngo-registration" required >
-  <label>City</label><select onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" class="form-control" required></select>
-<select id ="state" class="form-control" required></select>
-<script language="javascript">print_state("sts");</script>
-  <label>Address</label><input type="text" name="n-address" required>
-  <label>Contact No</label><input type="number" name="n-contact" required>
-  <label>NGO Email Address</label><input type="text" name="n-email" required>
-    <label>Password</label><input type="password" name="n-password" required>
-      <input type="submit" value="Register" id="s-register" >
-    </form>
+<form action="/restaurantRegister" method="POST">
+  <h1>Restaurant Registration</h1>
+
+  <label>Restaurant Name</label>
+  <input type="text" name="rName" required>
+
+  <label>Address</label>
+  <input type="text" name="rAddress" required>
+
+  <label>City</label>
+  <select onchange="print_city('restaurantCity', this.selectedIndex);" id="sts_restaurant" name="state_restaurant" class="form-control" required></select>
+  <select id="restaurantCity" class="form-control" name="city" required></select>
+  <script language="javascript">print_state("sts_restaurant");</script>
+
+  <label>Contact No</label>
+  <input type="number" name="rContact" required>
+
+  <label>Email</label>
+  <input type="email" name="rEmail" required>
+
+  <label>Opening Hours</label>
+  <input type="text" name="rOpeningHours" placeholder="e.g. 9 AM - 10 PM" required>
+
+  <label>Password</label>
+  <input type="password" name="rPassword" required>
+
+  <input type="submit" value="Register Restaurant">
+</form>
 </div>
 
 

@@ -48,6 +48,11 @@ const ngoSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    password:{
+        type:String,
+        required: true,
+        trim:true
     }
 });
 
@@ -97,6 +102,11 @@ const restaurantSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    password:{
+        type:String,
+        required: true,
+        trim:true
     }
 });
 
