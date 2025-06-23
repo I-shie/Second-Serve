@@ -1,6 +1,7 @@
-const mongoose=require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/donation-app');
+
+const mongoose=require('mongoose');
+const passportLocalMongoose = require("passport-local-mongoose");
 
 const ngoSchema = new mongoose.Schema({
     name: {
@@ -48,15 +49,12 @@ const ngoSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    },
-    password:{
-        type:String,
-        required: true,
-        trim:true
     }
 });
 
 
+ngoSchema.plugin(passportLocalMongoose,{ usernameField: 'email' });
+const NGO=mongoose.model("NGO",ngoSchema);
 
 
 
@@ -110,6 +108,33 @@ const restaurantSchema = new mongoose.Schema({
     }
 });
 
+restaurantSchema.plugin(passportLocalMongoose);
+const RESTAURANT=mongoose.model("RESTAURANT",restaurantSchema);
+
+const foodItemSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    description: {
+        type: String,
+        trim: true
+    },
+    pricePerUnit: {
+        type: Number,
+        required: true,
+        min: 0
+    },
+    quantityAvailable: {
+        type: Number,
+        required: true,
+        min: 0
+    }
+});
+
+const FOODITEM=mongoose.model("FOODITEM",foodItemSchema);
+
 const foodOrderSchema = new mongoose.Schema({
     itemName: {
         type: String,
@@ -137,49 +162,19 @@ const foodOrderSchema = new mongoose.Schema({
     }
 });
 
+const FOODORDER=mongoose.model("FOODORDER",foodOrderSchema);
 
-const foodItemSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    description: {
-        type: String,
-        trim: true
-    },
-    pricePerUnit: {
-        type: Number,
-        required: true,
-        min: 0
-    },
-    quantityAvailable: {
-        type: Number,
-        required: true,
-        min: 0
-    }
-});
+
+
+module.exports={
+    NGO,
+    RESTAURANT,
+    FOODITEM,
+    FOODORDER
+};
 
 
 
 
 
 
-const ngoModel=mongoose.model("ngoModel",ngoSchema);
-const restaurantModel = mongoose.model('Restaurant', restaurantSchema);
-const foodOrderModel = mongoose.model('Restaurant', foodOrderSchema);
-const foodItemModel = mongoose.model('Restaurant', foodItemSchema);
-
-
-
-
-
-
-
-// const ngo1=new ngoModel({
-//     name:"NT Trust & Co",
-//     city: "Dibrugarh",
-//     contact: 7099043794,
-//     email:"ntrust@gmail.com"
-// });
-// ngo1.save();
