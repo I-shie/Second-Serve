@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>NGO</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="ngo.js"></script>
+  <script src="cities.js"></script>
+  <style>
+
+  </style>
+</head>
+<body>
+
+<button onclick="open_login()">Login</button>
+<button onclick="open_register()">Register</button>
+
+
+<div id="login-page" style="display: none;">
+<form action="/ngo-login" method="POST">
+  <h1>Login</h1>
+  <label>Email</label><input type="email">
+    <label>Password</label><input type="password">
+      <input type="submit" value="Login">
+
+</div>
+
+<div id="register-page" style="display: none;">
+  <form action="/ngo-login" method="POST">
+  <h1>Registration</h1>
+  <label>NGO Name</label><input type="text" required name="n-name">
+  <label>NGO Registration No</label><input type="text" name="n-ngo-registration" required >
+  <label>City</label><select onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" class="form-control" required></select>
+<select id ="state" class="form-control" required></select>
+<script language="javascript">print_state("sts");</script>
+  <label>Address</label><input type="text" name="n-address" required>
+  <label>Contact No</label><input type="number" name="n-contact" required>
+  <label>NGO Email Address</label><input type="text" name="n-email" required>
+    <label>Password</label><input type="password" name="n-password" required>
+      <input type="submit" value="Register" id="s-register" >
+    </form>
+</div>
+
+
+<footer >
+  <p>Made By Kumar Ayush</a></p> 
+</footer>
+
+</body>
+</html>
