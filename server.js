@@ -61,9 +61,7 @@ app.post("/ngoLogin",passport.authenticate('local',{
     failureRedirect:"/ngoLogin"
 }));
 
-// app.post("/ngo-login",function(req,res){
-//     const {}
-// });
+
 
 app.post("/ngoRegister",function(req,res){
      
