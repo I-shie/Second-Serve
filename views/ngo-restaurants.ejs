@@ -12,6 +12,20 @@
 <body>
 
 <h1>Restaurants Available</h1>
-
+<hr>
+<% for(var i=0;i<orders.length;i++){%>
+<div class="order">
+  <% for(var y=0;y<restaurants.length;y++){%>
+    <% if (orders[i].restaurantid==restaurants[y].id ){ %>
+        <p>Restaurant Name: <%= restaurants[y].name %></p>
+    <%}%>
+  <%}%>
+<p>Item Name: <%= orders[i].itemName %></p>
+<p>Description: <%= orders[i].description %></p>
+<p>Quantity: <%= orders[i].quantity %></p>
+<p>Status: <%= orders[i].status %></p>
+<hr>
+</div>
+<%}%>
 </body>
 </html>

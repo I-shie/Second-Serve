@@ -158,10 +158,10 @@ const foodOrderSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    restaurantId:{
-        type: String,
-        required: true,
-        trim: true
+    restaurantid:{
+        type:String,
+        trim:true,
+        required:true
     }
 });
 

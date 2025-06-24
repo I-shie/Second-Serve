@@ -64,10 +64,12 @@ app.get("/ngoHomepage",function(req,res){
     
 });
 
-app.get("/ngoRestaurants",function(req,res){
+app.get("/ngoRestaurants",async function(req,res){
     if(req.isAuthenticated() && req.user.role=="ngo"){
         console.log(req.user);
-        res.render('ngo-restaurants',{user:req.user});
+        const orders=await model.FOODORDER.find({});
+        const restaurants=await model.RESTAURANT.find({});
+        res.render('ngo-restaurants',{orders:orders,restaurants:restaurants});
     }
     else{
         console.log("Unauthentic User");
@@ -189,7 +191,7 @@ app.post('/food-order', (req, res) => {
        itemName:req.body.itemName,
        description:req.body.description,
        quantity:req.body.quantity,
-       restaurantId: req.user.id
+       restaurantid: req.user.id
     });
     newOrder.save();
   // You can now save to DB, send a response, etc.
@@ -200,7 +202,7 @@ app.post('/food-order', (req, res) => {
 app.get("/rorderHistory",async function(req,res){
         if(req.isAuthenticated() && req.user.role=="restaurant"){
         
-        const orders= await model.FOODORDER.find({restaurantId:req.user.id});
+        const orders= await model.FOODORDER.find({restaurantid:req.user.id});
 
         console.log(orders);
         res.render('restaurant-orderHistory',{orders:orders});
