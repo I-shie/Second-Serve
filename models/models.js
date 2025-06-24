@@ -49,7 +49,12 @@ const ngoSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    role:{
+        type:String,
+        default: "ngo"
     }
+    
 });
 
 
@@ -91,7 +96,8 @@ const restaurantSchema = new mongoose.Schema({
         required: true,
         lowercase: true,
         trim: true,
-        match: [/^\S+@\S+\.\S+$/, 'Please provide a valid email address']
+        match: [/^\S+@\S+\.\S+$/, 'Please provide a valid email address'],
+        unique: true
     },
     openingHours: {
         type: String,
@@ -101,14 +107,13 @@ const restaurantSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    password:{
+    role:{
         type:String,
-        required: true,
-        trim:true
+        default: "restaurant"
     }
 });
 
-restaurantSchema.plugin(passportLocalMongoose);
+restaurantSchema.plugin(passportLocalMongoose,{ usernameField: 'email' });
 const RESTAURANT=mongoose.model("RESTAURANT",restaurantSchema);
 
 const foodItemSchema = new mongoose.Schema({

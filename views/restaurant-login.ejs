@@ -19,10 +19,10 @@
 
 
 <div id="login-page" style="display: none;">
-<form action="/restaurant-login" method="POST">
+<form action="/restaurantLogin" method="POST">
   <h1>Login</h1>
-  <label>Email</label><input type="email">
-    <label>Password</label><input type="password">
+  <label>Email</label><input type="email" name="email">
+    <label>Password</label><input type="password" name="password">
       <input type="submit" value="Login">
 </form>
 </div>
@@ -41,18 +41,10 @@
   <select onchange="print_city('restaurantCity', this.selectedIndex);" id="sts_restaurant" name="state_restaurant" class="form-control" required></select>
   <select id="restaurantCity" class="form-control" name="city" required></select>
   <script language="javascript">print_state("sts_restaurant");</script>
-
-  <label>Contact No</label>
-  <input type="number" name="rContact" required>
-
-  <label>Email</label>
-  <input type="email" name="rEmail" required>
-
-  <label>Opening Hours</label>
-  <input type="text" name="rOpeningHours" placeholder="e.g. 9 AM - 10 PM" required>
-
-  <label>Password</label>
-  <input type="password" name="rPassword" required>
+  <label>Contact No</label><input type="number" name="rContact" required>
+  <label>Email</label><input type="email" name="rEmail" required>
+  <label>Opening Hours</label><input type="text" name="rOpeningHours" placeholder="e.g. 9 AM - 10 PM" required>
+  <label>Password</label><input type="password" name="rPassword" required>
 
   <input type="submit" value="Register Restaurant">
 </form>

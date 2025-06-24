@@ -24,10 +24,24 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+//NGO
+passport.use('ngo',model.NGO.createStrategy());
+//Restaurant
+passport.use('restaurant',model.RESTAURANT.createStrategy());
 
-passport.use(model.NGO.createStrategy());
-passport.serializeUser(model.NGO.serializeUser());
-passport.deserializeUser(model.NGO.deserializeUser());
+passport.serializeUser((user, done) => {
+  done(null, {
+    id: user.id,
+    type: user.constructor.modelName // <- this is "NGO" or "Restaurant"
+  });
+});
+
+passport.deserializeUser(async (obj, done) => {
+  const Model = obj.type === "NGO" ? model.NGO : model.RESTAURANT;
+  const user = await Model.findById(obj.id);
+  done(null, user);
+});
+
 
 
 mongoose.connect("mongodb://localhost:27017/donation-app");
@@ -39,7 +53,8 @@ app.get("/",function(req,res){
 
 //NGO handling
 app.get("/ngo",function(req,res){
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() && req.user.role=="ngo"){
+        console.log(req.user);
         res.render('ngo');
     }
     else{
@@ -56,7 +71,7 @@ app.get("/ngoLogin",function(req,res){
     res.render('ngo-login');
 });
 
-app.post("/ngoLogin",passport.authenticate('local',{
+app.post("/ngoLogin",passport.authenticate('ngo',{
     successRedirect:"/ngo",
     failureRedirect:"/ngoLogin"
 }));
@@ -85,7 +100,7 @@ app.post("/ngoRegister",function(req,res){
         console.log("No error came");
       req.login(user, function(err) {
         if (err) { return next(err); }
-        res.redirect('/');
+        res.redirect('/ngoLogin');
       });
     }
     });
@@ -93,7 +108,14 @@ app.post("/ngoRegister",function(req,res){
 });
 //Restaurant handling
 app.get("/restaurant",function(req,res){
-    res.render('restaurant');
+        if(req.isAuthenticated() && req.user.role=="restaurant"){
+        console.log(req.user);
+        res.render('restaurant');
+    }
+    else{
+        console.log("Unauthentic User");
+        res.redirect("/restaurantLogin");
+    }
 });
 
 app.get("/restaurantLogin",function(req,res){
@@ -101,24 +123,49 @@ app.get("/restaurantLogin",function(req,res){
 });
 
 
+app.post("/restaurantLogin",passport.authenticate('restaurant',{
+    successRedirect:"/restaurant",
+    failureRedirect:"/restaurantLogin"
+}));
+
+
+
 app.post("/restaurantRegister", function(req, res) {
-    const name = req.body.rName;
-    const address = req.body.rAddress;
-    const city = req.body.city;
-    const contact = req.body.rContact;
-    const email = req.body.rEmail;
-    const openingHours = req.body.rOpeningHours;
+    const newRestaurant=new model.RESTAURANT({
+     name : req.body.rName,
+     address : req.body.rAddress,
+     city : req.body.city,
+     contact : req.body.rContact,
+     email : req.body.rEmail,
+     openingHours : req.body.rOpeningHours
+    });
     const password = req.body.rPassword;
 
-    console.log(name);
-    console.log(address);
-    console.log(city);
-    console.log(contact);
-    console.log(email);
-    console.log(openingHours);
     console.log(password);
+    model.RESTAURANT.register(newRestaurant,password,function (err, user) {      
+    if (err) {
+    
+      // if some error is occurring, log that error
+      console.log(err);
+    }
+    else {
+        console.log("No error came");
+      req.login(user, function(err) {
+        if (err) { return next(err); }
+        res.redirect('/restaurantLogin');
+      });
+    }
+    });
 
-    res.redirect("/restaurantLogin");
+
+});
+
+//Logout
+app.get("/logout", (req, res, next) => {
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    res.send("You have been logged out.");
+  });
 });
 
 //Port Listening
