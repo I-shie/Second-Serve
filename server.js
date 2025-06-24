@@ -52,10 +52,10 @@ app.get("/",function(req,res){
 
 
 //NGO handling
-app.get("/ngo",function(req,res){
+app.get("/ngoHomepage",function(req,res){
     if(req.isAuthenticated() && req.user.role=="ngo"){
         console.log(req.user);
-        res.render('ngo');
+        res.render('ngo-homepage',{user:req.user});
     }
     else{
         console.log("Unauthentic User");
@@ -64,7 +64,17 @@ app.get("/ngo",function(req,res){
     
 });
 
-
+app.get("/ngoRestaurants",function(req,res){
+    if(req.isAuthenticated() && req.user.role=="ngo"){
+        console.log(req.user);
+        res.render('ngo-restaurants',{user:req.user});
+    }
+    else{
+        console.log("Unauthentic User");
+        res.redirect("/ngoLogin");
+    }
+    
+});
 
 app.get("/ngoLogin",function(req,res){
 
@@ -72,7 +82,7 @@ app.get("/ngoLogin",function(req,res){
 });
 
 app.post("/ngoLogin",passport.authenticate('ngo',{
-    successRedirect:"/ngo",
+    successRedirect:"/ngoHomepage",
     failureRedirect:"/ngoLogin"
 }));
 
@@ -106,11 +116,14 @@ app.post("/ngoRegister",function(req,res){
     });
     
 });
+
+
+
+
 //Restaurant handling
 app.get("/restaurant",function(req,res){
         if(req.isAuthenticated() && req.user.role=="restaurant"){
-        console.log(req.user);
-        res.render('restaurant');
+        res.render('restaurant-homepage');
     }
     else{
         console.log("Unauthentic User");
@@ -122,13 +135,10 @@ app.get("/restaurantLogin",function(req,res){
     res.render('restaurant-login');
 });
 
-
 app.post("/restaurantLogin",passport.authenticate('restaurant',{
     successRedirect:"/restaurant",
     failureRedirect:"/restaurantLogin"
 }));
-
-
 
 app.post("/restaurantRegister", function(req, res) {
     const newRestaurant=new model.RESTAURANT({
@@ -138,14 +148,13 @@ app.post("/restaurantRegister", function(req, res) {
      contact : req.body.rContact,
      email : req.body.rEmail,
      openingHours : req.body.rOpeningHours
+
     });
     const password = req.body.rPassword;
 
     console.log(password);
     model.RESTAURANT.register(newRestaurant,password,function (err, user) {      
     if (err) {
-    
-      // if some error is occurring, log that error
       console.log(err);
     }
     else {
@@ -159,6 +168,49 @@ app.post("/restaurantRegister", function(req, res) {
 
 
 });
+
+//Handle Order
+app.get("/createOrder",function(req,res){
+        if(req.isAuthenticated() && req.user.role=="restaurant"){
+        res.render('restaurant-createOrder');
+    }
+    else{
+        console.log("Unauthentic User");
+        res.redirect("/restaurantLogin");
+    }
+});
+
+
+app.post('/food-order', (req, res) => {
+  // Access submitted fields
+  if(req.isAuthenticated() && req.user.role=="restaurant"){
+
+    const newOrder=new model.FOODORDER({
+       itemName:req.body.itemName,
+       description:req.body.description,
+       quantity:req.body.quantity,
+       restaurantId: req.user.id
+    });
+    newOrder.save();
+  // You can now save to DB, send a response, etc.
+  res.send('Food request created check orders!');
+}
+});
+
+app.get("/rorderHistory",async function(req,res){
+        if(req.isAuthenticated() && req.user.role=="restaurant"){
+        
+        const orders= await model.FOODORDER.find({restaurantId:req.user.id});
+
+        console.log(orders);
+        res.render('restaurant-orderHistory',{orders:orders});
+    }
+    else{
+        console.log("Unauthentic User");
+        res.redirect("/restaurantLogin");
+    }
+});
+
 
 //Logout
 app.get("/logout", (req, res, next) => {

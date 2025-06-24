@@ -126,11 +126,6 @@ const foodItemSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
-    pricePerUnit: {
-        type: Number,
-        required: true,
-        min: 0
-    },
     quantityAvailable: {
         type: Number,
         required: true,
@@ -151,11 +146,9 @@ const foodOrderSchema = new mongoose.Schema({
         trim: true
     },
     quantity: {
-        type: Number,
+        type: String,
         required: true,
-        min: 1
     },
-    foodItems: [foodItemSchema],
     status: {
         type: String,
         enum: ['available', 'claimed', 'completed'],
@@ -164,6 +157,11 @@ const foodOrderSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    restaurantId:{
+        type: String,
+        required: true,
+        trim: true
     }
 });
 
