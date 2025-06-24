@@ -154,16 +154,17 @@ const foodOrderSchema = new mongoose.Schema({
         enum: ['available', 'claimed', 'completed'],
         default: 'available'
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
     restaurantid:{
         type:String,
         trim:true,
         required:true
-    }
-});
+    },
+    ngoid:{
+        type:String,
+        trim:true
+    },
+    
+},{ timestamps: true });
 
 const FOODORDER=mongoose.model("FOODORDER",foodOrderSchema);
 

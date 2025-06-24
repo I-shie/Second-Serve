@@ -125,7 +125,7 @@ app.post("/ngoRegister",function(req,res){
 //Restaurant handling
 app.get("/restaurant",function(req,res){
         if(req.isAuthenticated() && req.user.role=="restaurant"){
-        res.render('restaurant-homepage');
+        res.render('restaurant-homepage',{user:req.user});
     }
     else{
         console.log("Unauthentic User");
@@ -183,8 +183,7 @@ app.get("/createOrder",function(req,res){
 });
 
 
-app.post('/food-order', (req, res) => {
-  // Access submitted fields
+app.post('/food-order',async function(req, res)  {
   if(req.isAuthenticated() && req.user.role=="restaurant"){
 
     const newOrder=new model.FOODORDER({
@@ -193,19 +192,30 @@ app.post('/food-order', (req, res) => {
        quantity:req.body.quantity,
        restaurantid: req.user.id
     });
-    newOrder.save();
+    await newOrder.save();
   // You can now save to DB, send a response, etc.
   res.send('Food request created check orders!');
 }
 });
 
 app.get("/rorderHistory",async function(req,res){
-        if(req.isAuthenticated() && req.user.role=="restaurant"){
-        
-        const orders= await model.FOODORDER.find({restaurantid:req.user.id});
+    if(req.isAuthenticated() && req.user.role=="restaurant"){
+          const orders= await model.FOODORDER.find({restaurantid:req.user.id}).sort({createdAt:-1});
+          const ngos= await model.NGO.find({});
+          console.log(orders);
+          res.render('restaurant-orderHistory',{orders:orders,ngos:ngos});
+    }
+    else{
+        console.log("Unauthentic User");
+        res.redirect("/restaurantLogin");
+    }
+});
 
-        console.log(orders);
-        res.render('restaurant-orderHistory',{orders:orders});
+app.get("/norderHistory",async function(req,res){
+    if(req.isAuthenticated() && req.user.role=="ngo"){
+          const orders= await model.FOODORDER.find({ngoid:req.user.id});
+          console.log(orders);
+          res.render('ngo-ordersHistory',{orders:orders});
     }
     else{
         console.log("Unauthentic User");
@@ -214,12 +224,65 @@ app.get("/rorderHistory",async function(req,res){
 });
 
 
+app.get("/acceptOrder/:orderid",async function(req,res){
+  if(req.isAuthenticated() && req.user.role=="ngo"){
+    await model.FOODORDER.findOneAndUpdate({_id:req.params.orderid},{$set: {status:"claimed",ngoid:req.user.id}});
+    res.redirect("/ngoRestaurants");
+  }
+    else{
+        console.log("Unauthentic User");
+        res.redirect("/ngotLogin");
+    }
+});
+
+app.get("/cancelOrder/:orderid",async function(req,res){
+  if(req.isAuthenticated() && req.user.role=="ngo"){
+    await model.FOODORDER.findOneAndUpdate({_id:req.params.orderid},{$set: {status:"available"}});
+    res.redirect("/ngoRestaurants");
+  }
+    else{
+        console.log("Unauthentic User");
+        res.redirect("/ngotLogin");
+    }
+});
+
+app.get("/completeOrder/:orderid",async function(req,res){
+  if(req.isAuthenticated() && req.user.role=="restaurant"){
+    await model.FOODORDER.findOneAndUpdate({_id:req.params.orderid},{$set: {status:"completed"}});
+    res.redirect("/rorderHistory");
+  }
+    else{
+        console.log("Unauthentic User");
+        res.redirect("/restaurantLogin");
+    }
+});
+
+app.get("/deleteOrder/:orderid",async function(req,res){
+  if(req.isAuthenticated() && req.user.role=="restaurant"){
+    await model.FOODORDER.deleteOne({_id:req.params.orderid});
+    res.redirect("/rorderHistory");
+  }
+    else{
+        console.log("Unauthentic User");
+        res.redirect("/restaurantLogin");
+    }
+});
 //Logout
-app.get("/logout", (req, res, next) => {
-  req.logout(function(err) {
+app.get("/logout/:role", (req, res, next) => {
+  if (req.params.role=="ngo"){
+    req.logout(function(err) {
     if (err) { return next(err); }
-    res.send("You have been logged out.");
+    res.redirect("/ngoLogin");
   });
+  }
+  else{
+    req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect("/restaurantLogin");
+  });
+
+  }
+  
 });
 
 //Port Listening

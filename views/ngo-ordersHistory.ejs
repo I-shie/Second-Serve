@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>NGO</title>
+  <title>Restaurant</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -10,24 +10,18 @@
   </style>
 </head>
 <body>
-
-<h1>Restaurants Available</h1>
+<h1>Order History</h1> 
 <hr>
 <% for(var i=0;i<orders.length;i++){%>
 <div class="order">
-  <% for(var y=0;y<restaurants.length;y++){%>
-    <% if (orders[i].restaurantid==restaurants[y].id ){ %>
-        <p>Restaurant Name: <%= restaurants[y].name %></p>
-    <%}%>
-  <%}%>
+<p>Order id: <%= orders[i].id %></p>
 <p>Item Name: <%= orders[i].itemName %></p>
 <p>Description: <%= orders[i].description %></p>
 <p>Quantity: <%= orders[i].quantity %></p>
 <p>Status: <%= orders[i].status %></p>
-<% if(orders[i].status=="available"){%>
-<a href="/acceptOrder/<%=orders[i].id%>">Accept</a>
+<% if(orders[i].status=="claimed"){%>
+<a href="/cancelOrder/<%=orders[i].id%>">Cancel Claim</a>
 <%}%>
-
 <hr>
 </div>
 <%}%>

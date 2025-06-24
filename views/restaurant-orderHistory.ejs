@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>NGO</title>
+  <title>Restaurant</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -19,6 +19,19 @@
 <p>Description: <%= orders[i].description %></p>
 <p>Quantity: <%= orders[i].quantity %></p>
 <p>Status: <%= orders[i].status %></p>
+<a href="/deleteOrder/<%=orders[i].id%>">Delete Order</a>
+<% if(orders[i].status=="claimed"){%>
+
+  <% for(var j=0;j<ngos.length;j++){ %>
+      <% if (orders[i].ngoid== ngos[j]._id){ %>
+        <h2>Accepted By</h2>
+        <p>Ngo Name: <%=ngos[j].name%></p>
+        <p>Ngo Contact: <%=ngos[j].contact%></p>
+      <%}%>
+  <%}%>
+
+<a href="/completeOrder/<%=orders[i].id%>">Complete Order</a>
+<%}%>
 <hr>
 </div>
 <%}%>
