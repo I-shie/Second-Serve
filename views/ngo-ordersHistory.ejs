@@ -51,12 +51,13 @@
 
     </div>
 </nav>
-  <h1>Order History</h1> 
-
-
-
-
-
+<hr style="color:#fff">
+<div class="bg-light text-white text-center py-3 mt-0">
+  <div class="container">
+    <h1 class="mb-0" style="color:#00bf63">Order History</h1>
+    
+  </div>
+</div>
 <div class="text-center py-5 d-flex flex-column align-items-center" style="min-height: 80vh; background-color: #00bf63;">
   <div class="d-flex flex-column justify-content-center gap-4 mt-5">
     <% for(var i=0;i<orders.length;i++){%>
@@ -67,6 +68,14 @@
       <p>Description: <%= orders[i].description %></p>
       <p>Quantity: <%= orders[i].quantity %></p>
       <p>Status: <%= orders[i].status %></p>
+      <% for(var j=0;j<restaurants.length;j++){ %>
+                  <% if (orders[i].restaurantid== restaurants[j]._id){ %>
+                    <h2>Restaurant Details</h2>
+                    <p>Restaurant Name: <%=restaurants[j].name%></p>
+                    <p>Restaurant Contact: <%=restaurants[j].contact%></p>
+                    <p>Restaurant Address:<%=restaurants[j].address%></p>
+                  <%}%>
+              <%}%>
         <% if(orders[i].status=="claimed"){%>
           <a href="/cancelOrder/<%=orders[i].id%>" class="btn rounded-pill mt-3 px-4" style="background-color: #00bf63; color:#fff;">Cancel Claim</a>
         <%}%>

@@ -49,8 +49,12 @@ app.get("/",function(req,res){
     res.render('index');
 });
 
-
-
+app.get("/about",function(req,res){
+    res.render('about');
+});
+app.get("/contact",function(req,res){
+    res.render('contact');
+});
 //NGO handling
 app.get("/ngoHomepage",function(req,res){
     if(req.isAuthenticated() && req.user.role=="ngo"){
@@ -221,8 +225,9 @@ app.get("/rorderHistory",async function(req,res){
 app.get("/norderHistory",async function(req,res){
     if(req.isAuthenticated() && req.user.role=="ngo"){
           const orders= await model.FOODORDER.find({ngoid:req.user.id}).sort({createdAt:-1});
+          const restaurants=await model.RESTAURANT.find({});
           console.log(orders);
-          res.render('ngo-ordersHistory',{orders:orders});
+          res.render('ngo-ordersHistory',{orders:orders,restaurants:restaurants});
     }
     else{
         console.log("Unauthentic User");
