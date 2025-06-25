@@ -4,7 +4,7 @@ const ejs=require('ejs');
 const app=express();
 const mongoose=require('mongoose');
 const model=require('./models/models');
-
+const flash = require('connect-flash');
 
 const session = require("express-session");
 const passport = require("passport");
@@ -23,7 +23,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(flash());
 //NGO
 passport.use('ngo',model.NGO.createStrategy());
 //Restaurant
@@ -174,7 +174,8 @@ app.post("/restaurantRegister", function(req, res) {
 //Handle Order
 app.get("/createOrder",function(req,res){
         if(req.isAuthenticated() && req.user.role=="restaurant"){
-        res.render('restaurant-createOrder');
+          const successMessage = req.flash('success');
+        res.render('restaurant-createOrder',{successMessage:successMessage});
     }
     else{
         console.log("Unauthentic User");
@@ -194,8 +195,14 @@ app.post('/food-order',async function(req, res)  {
     });
     await newOrder.save();
   // You can now save to DB, send a response, etc.
-  res.send('Food request created check orders!');
+  // res.send('Food request created check orders!');
+  req.flash('success', 'Order successfully created!');
+  res.redirect("/createOrder");
 }
+else{
+        console.log("Unauthentic User");
+        res.redirect("/restaurantLogin");
+    }
 });
 
 app.get("/rorderHistory",async function(req,res){
@@ -213,13 +220,13 @@ app.get("/rorderHistory",async function(req,res){
 
 app.get("/norderHistory",async function(req,res){
     if(req.isAuthenticated() && req.user.role=="ngo"){
-          const orders= await model.FOODORDER.find({ngoid:req.user.id});
+          const orders= await model.FOODORDER.find({ngoid:req.user.id}).sort({createdAt:-1});
           console.log(orders);
           res.render('ngo-ordersHistory',{orders:orders});
     }
     else{
         console.log("Unauthentic User");
-        res.redirect("/restaurantLogin");
+        res.redirect("/ngoLogin");
     }
 });
 
@@ -237,7 +244,7 @@ app.get("/acceptOrder/:orderid",async function(req,res){
 
 app.get("/cancelOrder/:orderid",async function(req,res){
   if(req.isAuthenticated() && req.user.role=="ngo"){
-    await model.FOODORDER.findOneAndUpdate({_id:req.params.orderid},{$set: {status:"available"}});
+    await model.FOODORDER.findOneAndUpdate({_id:req.params.orderid},{$set: {status:"available"},$unset:{ngoid:1}});
     res.redirect("/ngoRestaurants");
   }
     else{
@@ -267,18 +274,20 @@ app.get("/deleteOrder/:orderid",async function(req,res){
         res.redirect("/restaurantLogin");
     }
 });
+
+
 //Logout
 app.get("/logout/:role", (req, res, next) => {
   if (req.params.role=="ngo"){
     req.logout(function(err) {
     if (err) { return next(err); }
-    res.redirect("/ngoLogin");
+    res.redirect("/");
   });
   }
   else{
     req.logout(function(err) {
     if (err) { return next(err); }
-    res.redirect("/restaurantLogin");
+    res.redirect("/");
   });
 
   }

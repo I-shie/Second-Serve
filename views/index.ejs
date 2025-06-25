@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<head>
+    <title>WFMA</title>
+    <link rel="stylesheet" href="/css/design.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <style>
+        body{
+    background-color: #00bf63;
+}
+    .banner {
+      background-color: #00bf63; /* Canva-style green */
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .brand-text {
+      font-family: 'Pacifico', cursive;
+      font-size: 7rem;
+      color: white;
+    }
+
+    .action-btn {
+      width: 150px;
+      height: 50px;
+      font-weight: bold;
+      border-radius: 25px;
+      font-size: 1.2rem;
+    }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-light">
+  <div class="container-fluid">
+        <a class="navbar-brand" href="">
+            <img src="/images/logo.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
+        </a>
+        <div class="d-flex justify-content-end">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" style="color:#00bf63">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" style="color:#00bf63">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" style="color:#00bf63">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+<div class="container-fluid banner">
+  <div class="container">
+    <div class="row justify-content-between align-items-center text-center text-md-start">
+      <div class="col-md-6 mb-4 mb-md-0">
+        <div class="brand-text">
+          Second<br>Serve
+        </div>
+      </div>
+
+      <div class="col-md-4 text-center">
+        <a href="/ngoLogin" class="btn btn-light action-btn mb-3" style="color:#00bf63">NGO</a><br>
+        <a href="/restaurantLogin" class="btn btn-light action-btn" style="color:#00bf63">Restaurant</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</body>
+<%- include('footer'); -%>
+</html>

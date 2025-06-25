@@ -5,35 +5,89 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <style>
-  
-  </style>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+ 
+   <style>
+        body{
+    background-color: #00bf63;
+}
+    .banner {
+      background-color: #00bf63; /* Canva-style green */
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .brand-text {
+      font-family: 'Pacifico', cursive;
+      font-size: 7rem;
+      color: white;
+    }
+
+    .action-btn {
+      width: 150px;
+      height: 50px;
+      font-weight: bold;
+      border-radius: 25px;
+      font-size: 1.2rem;
+    }
+    </style>
 </head>
 <body>
+
+<nav class="navbar navbar-expand-sm bg-light">
+  <div class="container-fluid">
+        <a class="navbar-brand" href="/restaurant">
+            <img src="/images/logo.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
+        </a>
+        <div class="d-flex justify-content-end">
+            <ul class="navbar-nav">
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#" style="color:#00bf63">Logout</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
 <h1>Order History</h1> 
-<hr>
-<% for(var i=0;i<orders.length;i++){%>
-<div class="order">
-<p>Order id: <%= orders[i].id %></p>
-<p>Item Name: <%= orders[i].itemName %></p>
-<p>Description: <%= orders[i].description %></p>
-<p>Quantity: <%= orders[i].quantity %></p>
-<p>Status: <%= orders[i].status %></p>
-<a href="/deleteOrder/<%=orders[i].id%>">Delete Order</a>
-<% if(orders[i].status=="claimed"){%>
+<div class="text-center py-5 d-flex flex-column align-items-center" style="min-height: 80vh; background-color: #00bf63;">
+  <div class="d-flex flex-column justify-content-center gap-4 mt-5">
+    <% for(var i=0;i<orders.length;i++){%>
+    
+    <div class="bg-white p-4 rounded-4 shadow mx-auto" style="width: auto;">
+      <h4 class="fw-bold" style="color:#00bf63">Order id: <br><%= orders[i].id %></h4>
+      <p>Item Name: <%= orders[i].itemName %></p>
+      <p>Description: <%= orders[i].description %></p>
+      <p>Quantity: <%= orders[i].quantity %></p>
+      <p>Status: <%= orders[i].status %></p>
+      <a href="/deleteOrder/<%=orders[i].id%>" class="btn rounded-pill mt-3 px-4" style="background-color: #00bf63; color:#fff;">Delete Order</a>
+        <% if(orders[i].status=="claimed"){%>
 
-  <% for(var j=0;j<ngos.length;j++){ %>
-      <% if (orders[i].ngoid== ngos[j]._id){ %>
-        <h2>Accepted By</h2>
-        <p>Ngo Name: <%=ngos[j].name%></p>
-        <p>Ngo Contact: <%=ngos[j].contact%></p>
+              <% for(var j=0;j<ngos.length;j++){ %>
+                  <% if (orders[i].ngoid== ngos[j]._id){ %>
+                    <h2>Accepted By</h2>
+                    <p>Ngo Name: <%=ngos[j].name%></p>
+                    <p>Ngo Contact: <%=ngos[j].contact%></p>
+                    <p>Ngo Address:<%=ngos[j].address%></p>
+                  <%}%>
+              <%}%>
+
+        <a href="/completeOrder/<%=orders[i].id%>" class="btn rounded-pill mt-3 px-4" style="background-color: #00bf63; color:#fff;">Complete Order</a>
       <%}%>
-  <%}%>
+    </div>
 
-<a href="/completeOrder/<%=orders[i].id%>">Complete Order</a>
-<%}%>
-<hr>
+   
+    <%}%>
+  </div>
 </div>
-<%}%>
+
+
+
+
+
+<%- include('footer'); -%>
 </body>
 </html>

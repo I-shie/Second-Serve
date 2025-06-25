@@ -4,15 +4,71 @@
   <title>NGO</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/css/design.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    
+      <style>
+        body{
+    background-color: #00bf63;
+}
+    .banner {
+      background-color: #00bf63; /* Canva-style green */
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+    }
 
-  <style>
-  
-  </style>
+    .brand-text {
+      font-family: 'Pacifico', cursive;
+      font-size: 7rem;
+      color: white;
+    }
+
+    .action-btn {
+      width: 150px;
+      height: 50px;
+      font-weight: bold;
+      border-radius: 25px;
+      font-size: 1.2rem;
+    }
+    </style>
 </head>
 <body>
-<a href="/ngoRestaurants">Restaurants</a>
-<a href="/norderHistory">Restaurants</a>
-<a href="/logout/<%=user.role%>">Logout</a>
+  <nav class="navbar navbar-expand-sm bg-light">
+  <div class="container-fluid">
+        <a class="navbar-brand" href="">
+            <img src="/images/logo.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
+        </a>
+        <div class="d-flex justify-content-end">
+            <ul class="navbar-nav">
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout/<%=user.role%>" style="color:#00bf63">Logout</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+<div class="bg-#00bf63 text-center py-5 d-flex flex-column align-items-center" style="min-height: 80vh;">
+  <div class="d-flex flex-column flex-md-row justify-content-center gap-4 mt-5">
+    
+    <!-- Explore Restaurants Card -->
+    <div class="bg-white p-4 rounded-4 shadow" style="width: 350px;">
+      <h4 class="text-#00bf63 fw-bold" style="color:#00bf63">Explore<br>Restaurants</h4>
+      <a href="/ngoRestaurants" class="btn rounded-pill mt-3 px-4" style="background-color: #00bf63; color:#fff;">Go</a>
+    </div>
+
+    <!-- Order History Card -->
+    <div class="bg-white p-4 rounded-4 shadow" style="width: 350px;">
+      <h4 class="text-#00bf63 fw-bold" style="color:#00bf63">Order<br>History</h4>
+      <a href="/norderHistory" class="btn rounded-pill mt-3 px-4" style="background-color: #00bf63; color:#fff;">Go</a>
+    </div>
+
+  </div>
+</div>
+<%- include('footer'); -%>
 
 </body>
 </html>
