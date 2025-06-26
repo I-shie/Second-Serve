@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Restaurant</title>
+  <title>Order History</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<%- include('fav'); -%>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
  
    <style>
@@ -63,7 +63,7 @@
   <div class="d-flex flex-column justify-content-center gap-4 mt-5">
     <% for(var i=0;i<orders.length;i++){%>
     
-    <div class="bg-white p-4 rounded-4 shadow mx-auto" style="width: auto;">
+    <div class="bg-white p-4 rounded-4 shadow mx-auto" style="width: 90%;">
       <h4 class="fw-bold" style="color:#00bf63">Order id: <br><%= orders[i].id %></h4>
       <p>Item Name: <%= orders[i].itemName %></p>
       <p>Description: <%= orders[i].description %></p>
@@ -74,6 +74,7 @@
 
               <% for(var j=0;j<ngos.length;j++){ %>
                   <% if (orders[i].ngoid== ngos[j]._id){ %>
+                    <br><br>
                     <h2>Accepted By</h2>
                     <p>Ngo Name: <%=ngos[j].name%></p>
                     <p>Ngo Contact: <%=ngos[j].contact%></p>

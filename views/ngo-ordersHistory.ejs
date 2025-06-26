@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Restaurant</title>
+  <title>Order History</title>
+  <%- include('fav'); -%>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/css/design.css">
@@ -62,7 +63,7 @@
   <div class="d-flex flex-column justify-content-center gap-4 mt-5">
     <% for(var i=0;i<orders.length;i++){%>
     
-    <div class="bg-white p-4 rounded-4 shadow mx-auto" style="width: auto;">
+    <div class="bg-white p-4 rounded-4 shadow mx-auto" style="width: 90%;">
       <h4 class="fw-bold" style="color:#00bf63">Order id: <br><%= orders[i].id %></h4>
       <p>Item Name: <%= orders[i].itemName %></p>
       <p>Description: <%= orders[i].description %></p>
