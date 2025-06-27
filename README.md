@@ -22,6 +22,6 @@ Every year, tons of food go to waste while millions go hungry. We believe that w
     - Secure login for restaurants and NGOs with tailored dashboards. 
 
 ## Tech Stack
-    -*Backend* - Node.js, Express.js
-    -*Database* - Mongodb
-    -*Frontend* - Bootstrap
+    - *Backend* - Node.js, Express.js
+    - *Database* - Mongodb
+    - *Frontend* - Bootstrap
