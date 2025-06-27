@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Order History</title>
+  <%- include('fav'); -%>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/css/design.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+ 
+  <style>
+        body{
+    background-color: #00bf63;
+}
+    .banner {
+      background-color: #00bf63; /* Canva-style green */
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .brand-text {
+      font-family: 'Pacifico', cursive;
+      font-size: 7rem;
+      color: white;
+    }
+
+    .action-btn {
+      width: 150px;
+      height: 50px;
+      font-weight: bold;
+      border-radius: 25px;
+      font-size: 1.2rem;
+    }
+    </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-sm bg-light">
+  <div class="container-fluid">
+        <a class="navbar-brand" href="/ngoHomepage">
+            <img src="/images/logo.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
+        </a>
+        <div class="d-flex justify-content-end">
+            <ul class="navbar-nav">
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#" style="color:#00bf63">Logout</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+<hr style="color:#fff">
+<div class="bg-light text-white text-center py-3 mt-0">
+  <div class="container">
+    <h1 class="mb-0" style="color:#00bf63">Order History</h1>
+    
+  </div>
+</div>
+<div class="text-center py-5 d-flex flex-column align-items-center" style="min-height: 80vh; background-color: #00bf63;">
+  <div class="d-flex flex-column justify-content-center gap-4 mt-5">
+    <% for(var i=0;i<orders.length;i++){%>
+    
+    <div class="bg-white p-4 rounded-4 shadow mx-auto" style="width: 90%;">
+      <h4 class="fw-bold" style="color:#00bf63">Order id: <br><%= orders[i].id %></h4>
+      <p>Item Name: <%= orders[i].itemName %></p>
+      <p>Description: <%= orders[i].description %></p>
+      <p>Quantity: <%= orders[i].quantity %></p>
+      <p>Status: <%= orders[i].status %></p>
+      <% for(var j=0;j<restaurants.length;j++){ %>
+                  <% if (orders[i].restaurantid== restaurants[j]._id){ %>
+                    <h2>Restaurant Details</h2>
+                    <p>Restaurant Name: <%=restaurants[j].name%></p>
+                    <p>Restaurant Contact: <%=restaurants[j].contact%></p>
+                    <p>Restaurant Address:<%=restaurants[j].address%></p>
+                  <%}%>
+              <%}%>
+        <% if(orders[i].status=="claimed"){%>
+          <a href="/cancelOrder/<%=orders[i].id%>" class="btn rounded-pill mt-3 px-4" style="background-color: #00bf63; color:#fff;">Cancel Claim</a>
+        <%}%>
+    </div>
+
+   
+    <%}%>
+  </div>
+</div>
+
+</div>
+<%- include('footer'); -%>
+</body>
+</html>

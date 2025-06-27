@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About Second Serve</title>
+    <%- include('fav'); -%>
+    <link rel="stylesheet" href="/css/design.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body{
+    background-color: #00bf63;
+}
+    .banner {
+      background-color: #00bf63; /* Canva-style green */
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .brand-text {
+      font-family: 'Pacifico', cursive;
+      font-size: 7rem;
+      color: white;
+    }
+
+    .action-btn {
+      width: 150px;
+      height: 50px;
+      font-weight: bold;
+      border-radius: 25px;
+      font-size: 1.2rem;
+    }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-light">
+  <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="/images/logo.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="#navbarNav" >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+        <div class="collapse navbar-collapse justify-content-end " id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/" style="color:#00bf63">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" style="color:#00bf63">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact" style="color:#00bf63">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+        
+    </div>
+    
+</nav>
+
+<hr style="color:#fff">
+<div class="bg-light text-white text-center py-3 mt-0">
+  <div class="container">
+    <h1 class="mb-0" style="color:#00bf63">About Us</h1>
+    
+  </div>
+</div>
+
+<div class="text-center py-5 d-flex flex-column align-items-center" style="min-height: 80vh; background-color: #00bf63;">
+  <div class="d-flex flex-column justify-content-center gap-4 mt-5">
+    <div class="bg-white p-4 rounded-4 shadow mx-auto" style="width: 80%;">
+      <h4 class="fw-bold" style="color:#00bf63">Second Serve</h4>
+      <p>Second Serve is a social impact platform committed to tackling food waste and hunger—one meal at a time.
+
+We bridge the gap between restaurants with surplus food and NGOs that serve communities in need. <p>Through our platform, restaurants can seamlessly list excess food, while NGOs can view, claim, and distribute it efficiently.</p>
+</p>
+<p>Every year, tons of food go to waste while millions go hungry. We believe that with the right technology and community collaboration, this gap can be closed.</p><p> Second Serve empowers both food providers and social organizations to work hand-in-hand for a more sustainable and compassionate future.</p>
+     </div>
+
+     <div class="bg-white p-4 rounded-4 shadow mx-auto" style="width: 80%;">
+      <h4 class="fw-bold" style="color:#00bf63">What we Do?</h4>
+ <p>🥗 Restaurants can share excess prepared food before it goes to waste.</p>
+<p>🏥 NGOs can view available food orders in real-time and claim them for redistribution.</p>
+<p>📦 We streamline logistics, communication, and trust between donors and distributors.</p>
+
+
+    </div>
+  </div>
+</div>
+
+
+<%- include('footer'); -%>
+</body>
+
+
+
+
+</html>
