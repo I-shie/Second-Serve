@@ -7,8 +7,8 @@ Through our platform, restaurants can seamlessly list excess food, while NGOs ca
 Every year, tons of food go to waste while millions go hungry. We believe that with the right technology and community collaboration, this gap can be closed. Second Serve empowers both food providers and social organizations to work hand-in-hand for a more sustainable and compassionate future.
 
 ## Table of Contents
-[Features](#features)
-[Tech Stack](#tech-stack)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
 
 ## Features
 - 🍽️ *Restaurant Portal*  
@@ -20,3 +20,8 @@ Every year, tons of food go to waste while millions go hungry. We believe that w
 
 - 🔒 *Role-based Access Control*  
     - Secure login for restaurants and NGOs with tailored dashboards. 
+
+## Tech Stack
+    -*Backend* - Node.js, Express.js
+    -*Database* - Mongodb
+    -*Frontend* - Bootstrap
