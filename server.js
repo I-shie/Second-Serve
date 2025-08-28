@@ -71,7 +71,8 @@ app.get("/ngoHomepage",function(req,res){
 app.get("/ngoRestaurants",async function(req,res){
     if(req.isAuthenticated() && req.user.role=="ngo"){
         console.log(req.user);
-        const orders=await model.FOODORDER.find({});
+        const orders=await model.FOODORDER.find({status:'available'});
+        console.log(orders)
         const restaurants=await model.RESTAURANT.find({});
         res.render('ngo-restaurants',{orders:orders,restaurants:restaurants,user:req.user});
     }
