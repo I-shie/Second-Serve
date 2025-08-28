@@ -44,7 +44,7 @@ passport.deserializeUser(async (obj, done) => {
 
 
 
-mongoose.connect("mongodb://localhost:27017/donation-app");
+mongoose.connect("mongodb://database:27017/donation-app" || "mongodb://localhost:27017/donation-app");
 app.get("/",function(req,res){
     res.render('index');
 });
