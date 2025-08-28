@@ -73,7 +73,7 @@ app.get("/ngoRestaurants",async function(req,res){
         console.log(req.user);
         const orders=await model.FOODORDER.find({});
         const restaurants=await model.RESTAURANT.find({});
-        res.render('ngo-restaurants',{orders:orders,restaurants:restaurants});
+        res.render('ngo-restaurants',{orders:orders,restaurants:restaurants,user:req.user});
     }
     else{
         console.log("Unauthentic User");

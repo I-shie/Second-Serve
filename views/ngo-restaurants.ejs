@@ -62,10 +62,9 @@
 
 
 
-<div class="text-center py-5 d-flex flex-column align-items-center" style="min-height: 80vh; background-color: #00bf63;">
+<!-- <div class="text-center py-5 d-flex flex-column align-items-center" style="min-height: 80vh; background-color: #00bf63;">
   <div class="d-flex flex-column justify-content-center gap-4 mt-5">
     <% for(var i=0;i<orders.length;i++){%>
-    
     <div class="bg-white p-4 rounded-4 shadow mx-auto" style="width: 90%;">
       <h4 class="fw-bold" style="color:#00bf63">Order id: <br><%= orders[i].id %></h4>
       <p>Item Name: <%= orders[i].itemName %></p>
@@ -78,19 +77,46 @@
                     <p>Restaurant Name: <%=restaurants[j].name%></p>
                     <p>Restaurant Contact: <%=restaurants[j].contact%></p>
                     <p>Restaurant Address:<%=restaurants[j].address%></p>
+                    <p>Restaurant City:<%=restaurants[j].city%></p>
                   <%}%>
               <%}%>
         <% if(orders[i].status=="available"){%>
           <a href="/acceptOrder/<%=orders[i].id%>" class="btn rounded-pill mt-3 px-4" style="background-color: #00bf63; color:#fff;">Accept</a>
         <%}%>
     </div>
+    <%}%>
+  </div>
+</div> -->
 
-   
+<div class="text-center py-5 d-flex flex-column align-items-center" style="min-height: 80vh; background-color: #00bf63;">
+  <div class="d-flex flex-column justify-content-center gap-4 mt-5">  
+    <% for(var i=0;i<restaurants.length;i++){ %>
+        <% if (restaurants[i].city==user.city){ %>
+          
+              <% for(var j=0;j<orders.length;j++){ %>
+                <% if (restaurants[i].id==orders[j].restaurantid){ %>
+                  <div class="bg-white p-4 rounded-4 shadow mx-auto" style="width: 100%;">
+                  <h4 class="fw-bold" style="color:#00bf63">Order id: <br><%= orders[i].id %></h4>
+                  <p>Item Name: <%= orders[i].itemName %></p>
+                  <p>Description: <%= orders[i].description %></p>
+                  <p>Quantity: <%= orders[i].quantity %></p>
+                  <p>Status: <%= orders[i].status %></p>
+                  <h2>Restaurant Details</h2>
+                  <p>Restaurant Name: <%=restaurants[i].name%></p>
+                  <p>Restaurant Contact: <%=restaurants[i].contact%></p>
+                  <p>Restaurant Address:<%=restaurants[i].address%></p>
+                  <p>Restaurant City:<%=restaurants[i].city%></p>
+                  <% if(orders[i].status=="available"){%>
+                  <a href="/acceptOrder/<%=orders[i].id%>" class="btn rounded-pill mt-3 px-4" style="background-color: #00bf63; color:#fff;">Accept</a>
+                <%}%>
+                </div>
+              <%}%>  
+           
+          <%}%>
+        <%}%>
     <%}%>
   </div>
 </div>
-
-
 </body>
 <%- include('footer'); -%>
 </html>
